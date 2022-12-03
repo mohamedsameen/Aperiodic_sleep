@@ -68,5 +68,46 @@ for  A in variables:
         fm2 = FOOOF(**SETTINGS_F2)
         fm2.fit(A[keys]._freqs, np.mean(np.squeeze(A[keys]._data),0), freq_range) # fit with a knee
         fooof_b[i] = fm2.get_results()
-
         i=i+1
+
+# CREATE AND EXCEL SHEET WITH ALL model parameters
+import xlsxwriter
+
+# Create an new Excel file and add a worksheet.
+workbook = xlsxwriter.Workbook('Parametres_index.xlsx')
+worksheet = workbook.add_worksheet()
+
+data_cols = ['ID', 'Stage','Time Steps(s)', 'Knee', 'Rsquared', 'Error', 'Offset', 'Exponent', 'Number of Peaks']
+header_format = workbook.add_format({
+    'bold': False,
+    'font_name': 'Arial',
+    'font_size': 10,
+    'text_wrap': True,
+    'center_across': True,
+    'valign': 'bottom',
+    'fg_color': '#cdffff',
+    'border': 1})
+
+for col_num, value in enumerate(data_cols):
+    worksheet.write(0, col_num, value, header_format)
+
+i=1
+ii = 0
+timesteps = ["2","5","10","15"]*5 
+stages = np.repeat(np.array(["N1", "N2", "N3","R","W"]), 4, axis=0)
+for key , value in fooof_a.items():
+
+    worksheet.write(i, 0, 1)
+    worksheet.write(i, 3, "N")
+    worksheet.write(i, 1, stages[ii])
+    worksheet.write(i, 2, timesteps[ii])
+    worksheet.write(i, 4, fooof_a[key].r_squared)     # Writes an int
+    worksheet.write(i, 5, fooof_a[key].error)     # Writes an int
+    worksheet.write(i, 6, fooof_a[key].aperiodic_params[0])
+    worksheet.write(i, 7, fooof_a[key].aperiodic_params[1])     # Writes an int
+    worksheet.write(i, 8, len(fooof_a[key].peak_params))     # Writes an int
+
+# Writes an int
+    i=i+1
+    ii = ii+1
+workbook.close()
