@@ -93,7 +93,7 @@ for col_num, value in enumerate(data_cols):
 
 i=1
 ii = 0
-timesteps = ["2","5","10","15"]*5 
+timesteps = ["2","5","10","15"]*5
 stages = np.repeat(np.array(["N1", "N2", "N3","R","W"]), 4, axis=0)
 for key , value in fooof_a.items():
 
@@ -102,12 +102,28 @@ for key , value in fooof_a.items():
     worksheet.write(i, 1, stages[ii])
     worksheet.write(i, 2, timesteps[ii])
     worksheet.write(i, 4, fooof_a[key].r_squared)     # Writes an int
-    worksheet.write(i, 5, fooof_a[key].error)     # Writes an int
+    worksheet.write(i, 5, fooof_a[key].error)
     worksheet.write(i, 6, fooof_a[key].aperiodic_params[0])
-    worksheet.write(i, 7, fooof_a[key].aperiodic_params[1])     # Writes an int
-    worksheet.write(i, 8, len(fooof_a[key].peak_params))     # Writes an int
-
-# Writes an int
+    worksheet.write(i, 7, fooof_a[key].aperiodic_params[1])
+    worksheet.write(i, 8, len(fooof_a[key].peak_params))
     i=i+1
+    ii = ii+1
+
+# KNEE MODEL PARAM
+iii = i +1 # continue in the row following the end of the no knee condition
+ii = 0 # reset for loops
+for key , value in fooof_b.items():
+
+    worksheet.write(iii, 0, 1)
+    worksheet.write(iii, 4, "Y")
+    worksheet.write(iii, 1, stages[ii])
+    worksheet.write(iii, 2, timesteps2[ii])
+    worksheet.write(iii, 3, freq_lims[ii])
+    worksheet.write(iii, 5, fooof_b[key].r_squared)     # Writes an int
+    worksheet.write(iii, 6, fooof_b[key].error)     # Writes an int
+    worksheet.write(iii, 7, fooof_b[key].aperiodic_params[0])
+    worksheet.write(iii, 8, fooof_b[key].aperiodic_params[2])     # Writes an int
+    worksheet.write(iii, 9, len(fooof_b[key].peak_params))     # Writes an int
+    iii = iii +1
     ii = ii+1
 workbook.close()
