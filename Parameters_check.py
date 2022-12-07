@@ -32,13 +32,12 @@ RM={}
 
 i = 0
 for x in Time_segments:
-    i = i+1
     N1[x] = N1s.compute_psd(**SETTINGS_B, n_fft=fs*x) #N1
     N2[x] = N2s.compute_psd(**SETTINGS_B, n_fft=fs*x) #N2
     N3[x] = N3s.compute_psd(**SETTINGS_B, n_fft=fs*x)
     AW[x] = AWs.compute_psd(**SETTINGS_B, n_fft=fs*x)
     RM[x] = REs.compute_psd(**SETTINGS_B, n_fft=fs*x)
-
+    i = i+1
 # Now plot to get a feeling
 fig, ax = plt.subplots()
 ax.plot(TF_Wa._freqs, np.mean(np.squeeze(TF_N1a),0), color = 'black')
@@ -62,11 +61,11 @@ variables = [N1, N2, N3, AW, RM] # loop over stages
 for  A in variables:
     for keys, values in A.items():  # loop over time windows
         fm1 = FOOOF(**SETTINGS_F1)
-        fm1.fit(A[keys]._freqs, np.mean(np.squeeze(A[keys]._data),0), freq_range) # fit no knee
+        fm1.fit(A[keys]._freqs, np.mean(np.squeeze(A[keys]._data),0), [A[keys]._freqs[0] , A[keys]._freqs[-1]]) # fit no knee
         fooof_a[i] = fm1.get_results()
 
         fm2 = FOOOF(**SETTINGS_F2)
-        fm2.fit(A[keys]._freqs, np.mean(np.squeeze(A[keys]._data),0), freq_range) # fit with a knee
+        fm2.fit(A[keys]._freqs, np.mean(np.squeeze(A[keys]._data),0), [A[keys]._freqs[0] , A[keys]._freqs[-1]]) # fit with a knee
         fooof_b[i] = fm2.get_results()
         i=i+1
 
