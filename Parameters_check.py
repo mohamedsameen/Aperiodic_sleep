@@ -10,6 +10,8 @@ from fooof.utils.download import load_fooof_data
 
 EEG = mne.read_epochs_eeglab('/home/b1044271/Columbia/Test_dataset.set')
 EEG1 = EEG.pick('E257', exclude=[]) # select Cz for further analysis
+#EEG1 = EEG.pick(['E1','E2','E3','E257'], exclude=[]) # select Cz for further analysis
+n_chan = np.size(EEG1,1)
 
 #Now we select epochs and average over all epochs
 N1s = EEG1['stage_1']
