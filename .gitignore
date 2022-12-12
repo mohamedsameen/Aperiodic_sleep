@@ -8,11 +8,12 @@
 # Ignore files marked as old
 *_old*
 
-# Ignore Apple Desktop Services files
-*.DS_Store*
 
 # Ignore swap files
 *.swp*
+
+# Ignore all files in a folder (old/ outdated work)
+Trash/*
 
 # Ignore website files
 /docs/_site/*
