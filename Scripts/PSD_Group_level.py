@@ -36,10 +36,12 @@ def check_path(path):
 
 i = 0
 for x in subj_files:
-  EEG = mne.io.read_raw_eeglab(os.path.join(Data_path, x))
+
+  check_path(path_results / x[0:4]) # create subject folder
+  EEG = mne.io.read_raw_eeglab(os.path.join(Data_path, x)) # read raw .set file
   print('loaded')
   EEG1 = EEG.pick('E257', exclude=[]) # select Cz for further analysis
-  events = mne.read_events(Path(path_stage, stage_files[i]))
+  events = mne.read_events(Path(path_stage, stage_files[i])) #read staging markers
   epochs = mne.Epochs(EEG, events=events, tmin=-30, tmax=0)
   i = i+1
 # Frequency transformation welch's method from 1 to 70Hz different time stamps
@@ -57,24 +59,24 @@ for x in subj_files:
   AW={}
   RM={}
 
-  for x in Time_segments:
-      for y in f_max:
-          N1 = N1s.compute_psd(**SETTINGS_B, fmax=y, n_fft=fs*x) #N1
-          N2 = N2s.compute_psd(**SETTINGS_B, fmax=y, n_fft=fs*x) #N2
-          N3 = N3s.compute_psd(**SETTINGS_B, fmax=y, n_fft=fs*x)
-          AW = AWs.compute_psd(**SETTINGS_B, fmax=y, n_fft=fs*x)
-          RM = REs.compute_psd(**SETTINGS_B, fmax=y, n_fft=fs*x)
+  for t in Time_segments:
+      for f in f_max:
+          N1 = N1s.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t) #N1
+          N2 = N2s.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t) #N2
+          N3 = N3s.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
+          AW = AWs.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
+          RM = REs.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
 
-          check_path(path_results / subj_files[x][0:4] / 'N1')
-          check_path(path_results / subj_files[x][0:4] / 'N2')
-          check_path(path_results / subj_files[x][0:4] / 'N3')
-          check_path(path_results / subj_files[x][0:4] / 'AW')
-          check_path(path_results / subj_files[x][0:4] / 'RM')
+          check_path(path_results / x[0:4] / 'N1')
+          check_path(path_results / x[0:4] / 'N2')
+          check_path(path_results / x[0:4] / 'N3')
+          check_path(path_results / x[0:4] / 'AW')
+          check_path(path_results / x[0:4] / 'RM')
 
-          names = ['T' ,str(x), '_F' , str(y), '.txt']
+          names = ['T' ,str(t), '_F' , str(f), '.txt']
 
-          np.savetxt(Path(path_results / subj_files[x][0:4] / 'N1'/ ''.join(names)),N1)
-          np.savetxt(Path(path_results / subj_files[x][0:4] / 'N2'/ ''.join(names)),N1)
-          np.savetxt(Path(path_results / subj_files[x][0:4] / 'N3'/ ''.join(names)),N1)
-          np.savetxt(Path(path_results / subj_files[x][0:4] / 'AW'/ ''.join(names)),N1)
-          np.savetxt(Path(path_results / subj_files[x][0:4] / 'RM'/ ''.join(names)),N1)
+          np.savetxt(Path(path_results / x[0:4] / 'N1'/ ''.join(names)),np.squeeze(N1._data))
+          np.savetxt(Path(path_results / x[0:4] / 'N2'/ ''.join(names)),np.squeeze(N2._data))
+          np.savetxt(Path(path_results / x[0:4] / 'N3'/ ''.join(names)),np.squeeze(N3._data))
+          np.savetxt(Path(path_results / x[0:4] / 'AW'/ ''.join(names)),np.squeeze(AW._data))
+          np.savetxt(Path(path_results / x[0:4] / 'RM'/ ''.join(names)),np.squeeze(RM._data))
