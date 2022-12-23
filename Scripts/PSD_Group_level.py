@@ -26,9 +26,11 @@ subj_files = sorted(subj_files)
 fs = 250
 SETTINGS_B = { 'method' : 'welch', 'average' : 'mean', 'fmin' :1 }
 path_results = Path('/home/b1044271/Columbia/Results/PSDs')
+path_frqs = Path('/home/b1044271/Columbia/Results/PSDs/Freqs')
+
 Time_segments = [2, 5, 10, 15] #in seconds
 f_max = [30, 45 , 55, 70, 100]
-electrode = 'E21'
+electrode = 'E137'
 # Helper function for paths
 def check_path(path):
     if not os.path.exists(path):
@@ -76,7 +78,7 @@ for x in subj_files:
           check_path(path_results /electrode/ x[0:4] / 'RM')
 
           names = ['T' ,str(t), '_F' , str(f), '.npy']
-          Freq_res = ['F' , str(f), '_res.npy']
+          Freq_res = ['T' ,str(t),'F' , str(f), '_freqres.npy']
 
 
           np.save(Path(path_results /electrode/ x[0:4] / 'N1'/ ''.join(names)),np.squeeze(N1._data))
@@ -85,4 +87,4 @@ for x in subj_files:
           np.save(Path(path_results /electrode/ x[0:4] / 'AW'/ ''.join(names)),np.squeeze(AW._data))
           np.save(Path(path_results /electrode/ x[0:4] / 'RM'/ ''.join(names)),np.squeeze(RM._data))
 
-          np.save(Path(path_results / ''.join(Freq_res)),RM._freqs)
+          np.save(Path(path_frqs / ''.join(Freq_res)),RM._freqs)
