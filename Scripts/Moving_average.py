@@ -47,7 +47,6 @@ def check_path(path):
 
 check_path(path_results / electrode)
 
-
 if single_subject:
     EEG     = mne.io.read_raw_eeglab(os.path.join(Data_path, subj_files[random.randint(0,16)])) # read raw .set file
     EEG_seg = mne.make_fixed_length_epochs(EEG, duration = Time_segments, reject_by_annotation = 'True', overlap = Overlap)
