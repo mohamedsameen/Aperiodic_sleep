@@ -75,7 +75,7 @@ else:
             events = mne.read_events(Path(path_stage, stage_files[i])) #read staging markers
             epochs = mne.Epochs(EEG, events=events, tmin=-30, tmax=0)
             i = i+1
-            Frequency transformation welch's method from 1 to 70Hz different time stamps
+            #Frequency transformation welch's method from 1 to 70Hz different time stamps
                 #Now we select epochs and average over all epochs
             N1s = epochs['1']
             N2s = epochs['2']
