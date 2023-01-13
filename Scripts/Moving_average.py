@@ -37,6 +37,11 @@ subj_files = sorted(subj_files)
 fs = 250
 SETTINGS_B = { 'method' : 'welch', 'average' : 'mean', 'fmin' :1 , 'fmin' : 45 , 'n_fft': fs*t , 'n_overlap': fs*t*0.5}
 path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
+#FOOOF settings
+SETTINGS_F1={'max_n_peaks':8, 'aperiodic_mode':'fixed'}
+SETTINGS_F2={'max_n_peaks':8, 'aperiodic_mode':'knee'}
+fm1 = FOOOFGroup(**SETTINGS_F1)
+fm2 = FOOOFGroup(**SETTINGS_F2)
 
 # Helper function for paths
 def check_path(path):
