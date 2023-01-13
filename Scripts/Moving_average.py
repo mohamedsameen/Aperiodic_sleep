@@ -52,7 +52,8 @@ check_path(path_results / electrode)
 
 if single_subject:
     EEG     = mne.io.read_raw_eeglab(os.path.join(Data_path, subj_files[random.randint(0,16)])) # read raw .set file
-    EEG_seg = mne.make_fixed_length_epochs(EEG, duration = Time_segment, reject_by_annotation = 'True', overlap = Overlap)
+    EEG1    = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
+    EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = Time_segment, reject_by_annotation = 'True', overlap = Overlap)
     X       = EEG_seg.compute_psd(**SETTINGS_B)
 
     fm1.fit(X._freqs, np.squeeze(X._data), [X._freqs[0] , X._freqs[-1]])
@@ -74,7 +75,8 @@ else:
 
         if whole_night:
             EEG     = mne.io.read_raw_eeglab(os.path.join(Data_path, subj_files[random.randint(0,16)])) # read raw .set file
-            EEG_seg = mne.make_fixed_length_epochs(EEG, duration = t, reject_by_annotation = 'True', overlap = Overlap)
+            EEG1    = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
+            EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = t, reject_by_annotation = 'True', overlap = Overlap)
             X       = EEG_seg.compute_psd(**SETTINGS_B)
 
             fm1.fit(X._freqs, np.squeeze(X._data), [X._freqs[0] , X._freqs[-1]])
