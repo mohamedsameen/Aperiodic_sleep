@@ -14,12 +14,12 @@ import random
 
 
 # SET THE IMPORTANT parameters
-
-Time_segment = 5 #in seconds
-Overlap = 4
-electrode = 'E257'
-single_subject = 1
+single_subject = 0
 whole_night = 1
+
+t = 20 #in seconds
+Overlap = 15
+electrode = 'E257'
 
 # get the staging list
 path_stage = Path('/home/b1044271/EEGsleep/SleepStaging/mat/mne2/')
@@ -35,10 +35,8 @@ subj_files = sorted(subj_files)
 
 # Settings for the analyses
 fs = 250
-SETTINGS_B = { 'method' : 'welch', 'average' : 'mean', 'fmin' :1 , 'fmin' : 45 , 'n_fft': fs*Time_segment}
+SETTINGS_B = { 'method' : 'welch', 'average' : 'mean', 'fmin' :1 , 'fmin' : 45 , 'n_fft': fs*t , 'n_overlap': fs*t*0.5}
 path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
-
-
 
 # Helper function for paths
 def check_path(path):
@@ -55,19 +53,35 @@ if single_subject:
     fm1.fit(X._freqs, np.squeeze(X._data), [X._freqs[0] , X._freqs[-1]])
     fm2.fit(X._freqs, np.squeeze(X._data), [X._freqs[0] , X._freqs[-1]])
 
-
+    fm1.get_params('aperiodic_params','exponent')
+    fm2.get_params('aperiodic_params','exponent')
 
 else:
     i = 0
+
+    Slope_nk = np.zeros([17,100000])* np.nan
+    Slope_k = np.zeros([17,100000])* np.nan
+    Knee_k = np.zeros([17,100000])* np.nan
+    r2_nk = np.zeros([17,100000])* np.nan
+    r2_k = np.zeros([17,100000])* np.nan
+
     for x in subj_files:
 
         if whole_night:
             EEG     = mne.io.read_raw_eeglab(os.path.join(Data_path, subj_files[random.randint(0,16)])) # read raw .set file
-            EEG_seg = mne.make_fixed_length_epochs(EEG, duration = Time_segments, reject_by_annotation = 'True', overlap = Overlap)
+            EEG_seg = mne.make_fixed_length_epochs(EEG, duration = t, reject_by_annotation = 'True', overlap = Overlap)
             X       = EEG_seg.compute_psd(**SETTINGS_B)
 
             fm1.fit(X._freqs, np.squeeze(X._data), [X._freqs[0] , X._freqs[-1]])
             fm2.fit(X._freqs, np.squeeze(X._data), [X._freqs[0] , X._freqs[-1]])
+
+            Slope_nk[i, 0:len(fm1.get_params('aperiodic_params','exponent'))] = fm1.get_params('aperiodic_params','exponent')
+            Slope_k[i, 0:len(fm2.get_params('aperiodic_params','exponent'))] = fm2.get_params('aperiodic_params','exponent')
+
+            r2_nk[i, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
+            r2_k[i, 0:len(fm1.get_params('r_squared'))] = fm2.get_params('r_squared')
+
+            knee_k[i, 0:len(fm1.get_params('aperiodic_params','knee'))] = fm1.get_params('aperiodic_params','knee')
 
 
         else:
