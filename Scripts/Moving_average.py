@@ -74,7 +74,7 @@ else:
     for x in subj_files:
 
         if whole_night:
-            EEG     = mne.io.read_raw_eeglab(os.path.join(Data_path, subj_files[random.randint(0,16)])) # read raw .set file
+            EEG     = mne.io.read_raw_eeglab(x) # read raw .set file
             EEG1    = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
             EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = t, reject_by_annotation = 'True', overlap = Overlap)
             X       = EEG_seg.compute_psd(**SETTINGS_B)
@@ -88,8 +88,8 @@ else:
             r2_nk[i, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
             r2_k[i, 0:len(fm1.get_params('r_squared'))] = fm2.get_params('r_squared')
 
-            knee_k[i, 0:len(fm1.get_params('aperiodic_params','knee'))] = fm1.get_params('aperiodic_params','knee')
-
+            Knee_k[i, 0:len(fm1.get_params('aperiodic_params','knee'))] = fm1.get_params('aperiodic_params','knee')
+            i = i +1
 
         else:
 
