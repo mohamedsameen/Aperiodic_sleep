@@ -58,7 +58,7 @@ for S in subj_files:
   fm1 = FOOOFGroup(**SETTINGS_F1)
   fm2 = FOOOFGroup(**SETTINGS_F2)
 
-  fm1.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data[0:100]), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
+  fm1.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
   fm2.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
 
   Slope_nk[i, 0:len(fm1.get_params('aperiodic_params','exponent'))] = fm1.get_params('aperiodic_params','exponent')
