@@ -64,6 +64,6 @@ for S in subj_files:
   Slope_nk[i, 0:len(fm1.get_params('aperiodic_params','exponent'))] = fm1.get_params('aperiodic_params','exponent')
   Slope_k[i, 0:len(fm2.get_params('aperiodic_params','exponent'))] = fm2.get_params('aperiodic_params','exponent')
   r2_nk[i, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
-  r2_k[i, 0:len(fm1.get_params('r_squared'))] = fm2.get_params('r_squared')
-  Knee_k[i, 0:len(fm1.get_params('aperiodic_params','knee'))] = fm1.get_params('aperiodic_params','knee')
+  r2_k[i, 0:len(fm2.get_params('r_squared'))] = fm2.get_params('r_squared')
+  Knee_k[i, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm1.get_params('aperiodic_params','knee')
   i = i +1
