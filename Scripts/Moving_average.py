@@ -74,7 +74,7 @@ else:
     for x in subj_files:
 
         if whole_night:
-            EEG     = mne.io.read_raw_eeglab(x) # read raw .set file
+            EEG     = mne.io.read_raw_eeglab(os.path.join(Data_path, x)) # read raw .set file
             EEG1    = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
             EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = t, reject_by_annotation = 'True', overlap = Overlap)
             X       = EEG_seg.compute_psd(**SETTINGS_B)
