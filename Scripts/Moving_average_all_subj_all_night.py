@@ -45,7 +45,7 @@ r2_k = np.zeros([17,100000])* np.nan
 
 # START
 i= 0
-for S in subj_files
+for S in subj_files:
   EEG = mne.io.read_raw_eeglab(os.path.join(Data_path, S)) # read raw .set file
   EEG1 = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
   EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = 20, reject_by_annotation = 'True', overlap = 15)
