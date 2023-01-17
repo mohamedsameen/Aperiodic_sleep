@@ -28,7 +28,6 @@ subj_files = sorted(subj_files)
 # Create path for results
 path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
 
-
 t = 5 #in seconds
 t2 = 10
 f_max =  45
@@ -42,6 +41,14 @@ Slope_k = np.zeros([17,100000])* np.nan
 Knee_k = np.zeros([17,100000])* np.nan
 r2_nk = np.zeros([17,100000])* np.nan
 r2_k = np.zeros([17,100000])* np.nan
+
+
+# Helper function for paths
+def check_path(path):
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+check_path(path_results / electrode)
 
 # START
 i= 0
@@ -67,3 +74,10 @@ for S in subj_files:
   r2_k[i, 0:len(fm2.get_params('r_squared'))] = fm2.get_params('r_squared')
   Knee_k[i, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm2.get_params('aperiodic_params','knee')
   i = i +1
+
+
+np.save(Path(path_results /electrode /  'Slope_nk'),Slope_nk)
+np.save(Path(path_results /electrode /  'Slope_k'),Slope_k)
+np.save(Path(path_results /electrode /  'r2_k'),r2_k)
+np.save(Path(path_results /electrode /  'r2_nk'),r2_nk)
+np.save(Path(path_results /electrode /  'Knee_k'),Knee_nk)
