@@ -75,9 +75,8 @@ for S in subj_files:
   Knee_k[i, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm2.get_params('aperiodic_params','knee')
   i = i +1
 
-
 np.save(Path(path_results /electrode /  'Slope_nk'),Slope_nk)
 np.save(Path(path_results /electrode /  'Slope_k'),Slope_k)
 np.save(Path(path_results /electrode /  'r2_k'),r2_k)
 np.save(Path(path_results /electrode /  'r2_nk'),r2_nk)
-np.save(Path(path_results /electrode /  'Knee_k'),Knee_nk)
+np.save(Path(path_results /electrode /  'Knee_k'),Knee_k)
