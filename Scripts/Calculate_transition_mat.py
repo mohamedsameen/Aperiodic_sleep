@@ -26,16 +26,16 @@ for file in stage_files:
     # Go through the staging files and get the index of all the stags then find the next stage
 
     N1_o = [i for i in range(len(stages)) if stages[i] == 1]
-    N1_l = np.array(stages)[np.array([i + 1 for i in N1_o])]
+    N1_l = np.array(stages)[np.array([i + 1 for i in N1_o[0:-2]])]
 
     N2_o = [i for i in range(len(stages)) if stages[i] == 2]
-    N2_l = np.array(stages)[np.array([i + 1 for i in N2_o])]
+    N2_l = np.array(stages)[np.array([i + 1 for i in N2_o[0:-2]])]
 
     N3_o = [i for i in range(len(stages)) if stages[i] == 3]
-    N3_l = np.array(stages)[np.array([i + 1 for i in N3_o])]
+    N3_l = np.array(stages)[np.array([i + 1 for i in N3_o[0:-2]])]
 
     R_o = [i for i in range(len(stages)) if stages[i] == 5]
-    R_l = np.array(stages)[np.array([i + 1 for i in R_o])]
+    R_l = np.array(stages)[np.array([i + 1 for i in R_o[0:-2]])]
 
     W_o = [i for i in range(len(stages)) if stages[i] == 0]
     W_l = np.array(stages)[np.array([i + 1 for i in W_o[0:-2]])]
