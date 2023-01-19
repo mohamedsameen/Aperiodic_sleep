@@ -75,4 +75,5 @@ W_t = [np.sum(~np.isnan(W_trans[4])), np.sum(~np.isnan(W_trans[3])),np.sum(~np.i
             np.sum(~np.isnan(W_trans[1])),np.sum(~np.isnan(W_trans[2]))]
 
 
-Trns_mat[subj,:] = np.concatenate((W_t,R_t,N1_t,N2_t,N3_t),axis=0)
+Trns_mat[i,:] = np.concatenate((W_t,R_t,N1_t,N2_t,N3_t),axis=0)
+i=i+1
