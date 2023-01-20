@@ -42,7 +42,7 @@ check_path(path_results / 'Cz' / '30-45')
 i = 0
 for x in subj_files:
 
-  check_path(path_results / electrode / '30-45' / x[0:4]) # create subject folder
+  check_path(path_results / 'Cz' / '30-45' / x[0:4]) # create subject folder
   EEG = mne.io.read_raw_eeglab(os.path.join(Data_path, x)) # read raw .set file
   print('loaded')
   EEG1 = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
@@ -72,20 +72,20 @@ for x in subj_files:
       AW = AWs.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
       RM = REs.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
 
-      check_path(path_results /electrode/ '30-45' /x[0:4] / 'N1')
-      check_path(path_results /electrode/ '30-45' /x[0:4] / 'N2')
-      check_path(path_results /electrode/ '30-45' /x[0:4] / 'N3')
-      check_path(path_results /electrode/ '30-45' /x[0:4] / 'AW')
-      check_path(path_results /electrode/ '30-45' /x[0:4] / 'RM')
+      check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'N1')
+      check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'N2')
+      check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'N3')
+      check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'AW')
+      check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'RM')
 
       names = ['T' ,str(t), '_30_45.npy']
       Freq_res = ['T' ,str(t),'_30_45_freqres.npy']
 
 
-      np.save(Path(path_results /electrode/ '30-45' / x[0:4] / 'N1'/ ''.join(names)),np.squeeze(N1._data))
-      np.save(Path(path_results /electrode/ '30-45' / x[0:4] / 'N2'/ ''.join(names)),np.squeeze(N2._data))
-      np.save(Path(path_results /electrode/ '30-45' / x[0:4] / 'N3'/ ''.join(names)),np.squeeze(N3._data))
-      np.save(Path(path_results /electrode/ '30-45' / x[0:4] / 'AW'/ ''.join(names)),np.squeeze(AW._data))
-      np.save(Path(path_results /electrode/ '30-45' / x[0:4] / 'RM'/ ''.join(names)),np.squeeze(RM._data))
+      np.save(Path(path_results /'Cz'/ '30-45' / x[0:4] / 'N1'/ ''.join(names)),np.squeeze(N1._data))
+      np.save(Path(path_results /'Cz'/ '30-45' / x[0:4] / 'N2'/ ''.join(names)),np.squeeze(N2._data))
+      np.save(Path(path_results /'Cz'/ '30-45' / x[0:4] / 'N3'/ ''.join(names)),np.squeeze(N3._data))
+      np.save(Path(path_results /'Cz'/ '30-45' / x[0:4] / 'AW'/ ''.join(names)),np.squeeze(AW._data))
+      np.save(Path(path_results /'Cz'/ '30-45' / x[0:4] / 'RM'/ ''.join(names)),np.squeeze(RM._data))
 
       np.save(Path(path_frqs / ''.join(Freq_res)),RM._freqs)
