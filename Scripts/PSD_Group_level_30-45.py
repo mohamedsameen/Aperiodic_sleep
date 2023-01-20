@@ -66,11 +66,11 @@ for x in subj_files:
 
   for t in Time_segments:
 
-      N1 = N1s.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t) #N1
-      N2 = N2s.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t) #N2
-      N3 = N3s.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
-      AW = AWs.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
-      RM = REs.compute_psd(**SETTINGS_B, fmax=f, n_fft=fs*t)
+      N1 = N1s.compute_psd(**SETTINGS_B, n_fft=fs*t) #N1
+      N2 = N2s.compute_psd(**SETTINGS_B, n_fft=fs*t) #N2
+      N3 = N3s.compute_psd(**SETTINGS_B, n_fft=fs*t)
+      AW = AWs.compute_psd(**SETTINGS_B, n_fft=fs*t)
+      RM = REs.compute_psd(**SETTINGS_B, n_fft=fs*t)
 
       check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'N1')
       check_path(path_results /'Cz'/ '30-45' /x[0:4] / 'N2')
