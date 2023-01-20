@@ -37,7 +37,7 @@ def check_path(path):
     if not os.path.exists(path):
         os.mkdir(path)
 
-check_path(path_results / electrode / '30-45')
+check_path(path_results / 'Cz' / '30-45')
 
 i = 0
 for x in subj_files:
