@@ -29,7 +29,6 @@ subj_files = sorted(subj_files)
 path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
 
 t = 5 #in seconds
-t2 = 10
 f_max =  45
 electrode = 'E257'
 fs = 250
@@ -66,7 +65,10 @@ for S in subj_files:
   fm2 = FOOOFGroup(**SETTINGS_F2)
 
   fm1.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
+  fm1.save(S + '_AllNight_NoKnee',  file_path = path_results / electrode, save_results=True)
+
   fm2.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
+  fm2.save(S + '_AllNight_Knee',  file_path = path_results / electrode, save_results=True)
 
   Slope_nk[i, 0:len(fm1.get_params('aperiodic_params','exponent'))] = fm1.get_params('aperiodic_params','exponent')
   Slope_k[i, 0:len(fm2.get_params('aperiodic_params','exponent'))] = fm2.get_params('aperiodic_params','exponent')
