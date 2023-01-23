@@ -29,7 +29,7 @@ SETTINGS_F1={'max_n_peaks':8, 'aperiodic_mode':'fixed'}
 
 fm1 = FOOOFGroup(**SETTINGS_F1)
 for x in subj_files:
-    EEG = mne.read_epochs_eeglab(os.path.joinos.path.join(Data_path, x))
+    EEG = mne.read_epochs_eeglab(os.path.join(Data_path, x))
     EEG1 = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
 
     EEG_psd = EEG.compute_psd(**SETTINGS_B)
