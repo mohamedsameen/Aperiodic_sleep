@@ -76,8 +76,8 @@ for S in subj_files:
   r2_nk[i, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
   r2_k[i, 0:len(fm2.get_params('r_squared'))] = fm2.get_params('r_squared')
   Knee_k[i, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm2.get_params('aperiodic_params','knee')
-  Off_nk[i, 0:len(fm1.get_params('aperiodic_params','offset'))] = fm1.get_params('aperiodic_params','knee')
-  Off_k[i, 0:len(fm2.get_params('aperiodic_params','offset'))] = fm2.get_params('aperiodic_params','knee')
+  Off_nk[i, 0:len(fm1.get_params('aperiodic_params','offset'))] = fm1.get_params('aperiodic_params','offset')
+  Off_k[i, 0:len(fm2.get_params('aperiodic_params','offset'))] = fm2.get_params('aperiodic_params','offset')
   i = i +1
 
 np.save(Path(path_results /electrode /  'Slope_nk_20_2'),Slope_nk)
