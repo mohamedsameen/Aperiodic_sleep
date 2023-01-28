@@ -40,7 +40,8 @@ Slope_k = np.zeros([17,100000])* np.nan
 Knee_k = np.zeros([17,100000])* np.nan
 r2_nk = np.zeros([17,100000])* np.nan
 r2_k = np.zeros([17,100000])* np.nan
-
+Off_nk = np.zeros([17,100000])* np.nan
+Off_k = np.zeros([17,100000])* np.nan
 
 # Helper function for paths
 def check_path(path):
@@ -54,7 +55,7 @@ i= 0
 for S in subj_files:
   EEG = mne.io.read_raw_eeglab(os.path.join(Data_path, S)) # read raw .set file
   EEG1 = EEG.pick(electrode, exclude=[]) # select Cz for further analysis
-  EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = 20, reject_by_annotation = 'True', overlap = 15)
+  EEG_seg = mne.make_fixed_length_epochs(EEG1, duration = 20, reject_by_annotation = 'True', overlap = 18)
   EEG_psd = EEG_seg.compute_psd(**SETTINGS_B)
 
   #FOOOF settings
@@ -75,10 +76,14 @@ for S in subj_files:
   r2_nk[i, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
   r2_k[i, 0:len(fm2.get_params('r_squared'))] = fm2.get_params('r_squared')
   Knee_k[i, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm2.get_params('aperiodic_params','knee')
+  Off_nk[i, 0:len(fm1.get_params('aperiodic_params','offset'))] = fm1.get_params('aperiodic_params','knee')
+  Off_k[i, 0:len(fm2.get_params('aperiodic_params','offset'))] = fm2.get_params('aperiodic_params','knee')
   i = i +1
 
-np.save(Path(path_results /electrode /  'Slope_nk'),Slope_nk)
-np.save(Path(path_results /electrode /  'Slope_k'),Slope_k)
-np.save(Path(path_results /electrode /  'r2_k'),r2_k)
-np.save(Path(path_results /electrode /  'r2_nk'),r2_nk)
-np.save(Path(path_results /electrode /  'Knee_k'),Knee_k)
+np.save(Path(path_results /electrode /  'Slope_nk_20_2'),Slope_nk)
+np.save(Path(path_results /electrode /  'Slope_k_20_2'),Slope_k)
+np.save(Path(path_results /electrode /  'r2_k_20_2'),r2_k)
+np.save(Path(path_results /electrode /  'r2_nk_20_2'),r2_nk)
+np.save(Path(path_results /electrode /  'Knee_k_20_2'),Knee_k)
+np.save(Path(path_results /electrode /  'Offset_nk_20_2'),Off_nk)
+np.save(Path(path_results /electrode /  'Offset_k_20_2'),Off_k)
