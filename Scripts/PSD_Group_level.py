@@ -24,7 +24,7 @@ subj_files = sorted(subj_files)
 
 # Settings for the analyses
 fs = 250
-SETTINGS_B = { 'method' : 'welch', 'median' : 'mean', 'fmin' :0.1 }
+SETTINGS_B = { 'method' : 'welch', 'average' : 'median', 'fmin' :0.1 }
 path_results = Path('/home/b1044271/Columbia/Results/PSDs/New_freq_Res')
 path_frqs = Path('/home/b1044271/Columbia/Results/PSDs/Freqs')
 
