@@ -24,13 +24,13 @@ subj_files = sorted(subj_files)
 
 # Settings for the analyses
 fs = 250
-SETTINGS_B = { 'method' : 'welch', 'average' : 'mean', 'fmin' :1 }
-path_results = Path('/home/b1044271/Columbia/Results/PSDs')
+SETTINGS_B = { 'method' : 'welch', 'median' : 'mean', 'fmin' :0.1 }
+path_results = Path('/home/b1044271/Columbia/Results/PSDs/New_freq_Res')
 path_frqs = Path('/home/b1044271/Columbia/Results/PSDs/Freqs')
 
-Time_segments = [2, 5, 10, 15] #in seconds
+Time_segments = [2, 5, 10, 15,20] #in seconds
 f_max = [30, 45 , 55, 70, 100]
-electrode = 'E137'
+electrode = 'E257'
 # Helper function for paths
 def check_path(path):
     if not os.path.exists(path):

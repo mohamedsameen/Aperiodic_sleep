@@ -7,13 +7,14 @@ import glob
 ###################################################################################################
 ###################################################################################################
 
-def resample_stages(path, req_samp_rate)
+def resample_stages(path, req_samp_rate, ext_of_stage_files=None)
 
-    path_stage = path
+    path_stage = path +'/*.' + extension
     stage_files = glob.glob(path_stage)
     #set required time resolution - stages are in 30 seconds so the conversion depends on the time resolution specified
-    fs-actual = 30
+    fs_actual = 30
     fs_req = req_samp_rate
+    cov_eq =
 
     for file in stage_files:
         files  = pd.read_csv(file)
