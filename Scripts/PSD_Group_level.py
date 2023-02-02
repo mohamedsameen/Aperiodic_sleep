@@ -24,7 +24,7 @@ subj_files = sorted(subj_files)
 
 # Settings for the analyses
 fs = 250
-SETTINGS_B = { 'method' : 'welch', 'average' : 'median', 'fmin' :0.1 }
+SETTINGS_B = { 'method' : 'welch', 'average' : 'mean', 'fmin' :0.1 }
 path_results = Path('/home/b1044271/Columbia/Results/PSDs/New_freq_Res')
 path_frqs = Path('/home/b1044271/Columbia/Results/PSDs/Freqs')
 
@@ -77,7 +77,7 @@ for x in subj_files:
           check_path(path_results /electrode/ x[0:4] / 'AW')
           check_path(path_results /electrode/ x[0:4] / 'RM')
 
-          names = ['T' ,str(t), '_F' , str(f), '.npy']
+          names = ['T' ,str(t), '_F' , str(f), '_mean.npy']
           Freq_res = ['T' ,str(t),'F' , str(f), '_freqres.npy']
 
 
