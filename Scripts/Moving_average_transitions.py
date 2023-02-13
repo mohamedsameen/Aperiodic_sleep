@@ -14,7 +14,7 @@ from math import floor
 
 
 # get the subjects list
-Data_path = '/home/b1044271/Columbia/Preprocessed/Stage_epoched'
+Data_path = '/home/b1044271/Columbia/Preprocessed/Stage_epoched/REM/R2N'
 subj_files = os.listdir(Data_path)
 subj_files = [file for file in subj_files]
 subj_files = sorted(subj_files)
@@ -25,7 +25,7 @@ electrode = 'E257'
 fs = 250
 # Settings for the analyses
 SETTINGS_B  = { 'method' : 'welch', 'average' : 'mean', 'fmin' :1 , 'fmax':f_max, 'n_fft': fs*t, 'n_overlap': fs*t*0.5}
-SETTINGS_F1={'max_n_peaks':8, 'aperiodic_mode':'knee'}
+SETTINGS_F1={'max_n_peaks':8, 'aperiodic_mode':'fixed'}
 
 fm1 = FOOOFGroup(**SETTINGS_F1)
 for x in subj_files:
@@ -35,4 +35,4 @@ for x in subj_files:
     EEG_psd = EEG.compute_psd(**SETTINGS_B)
 
     fm1.fit(EEG_psd._freqs, np.squeeze(np.mean(EEG_psd._data, axis = 1)), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
-    fm1.save(x +'_KK_trans',  file_path = '/home/b1044271/Columbia/Results/Time-resolved/E257/Transitions', save_results=True)
+    fm1.save(x +'_K_REM_trans',  file_path = '/home/b1044271/Columbia/Results/Time-resolved/E257/Transitions/REM/R_N', save_results=True)
