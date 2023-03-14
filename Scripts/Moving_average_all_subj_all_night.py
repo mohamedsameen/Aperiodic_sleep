@@ -31,7 +31,7 @@ path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
 
 # Set parameters for calculating
 t     = 5 #in seconds
-f_main =  1 # maximum frequency
+f_min =  1 # maximum frequency
 f_max =  45 # maximum frequency
 fs    = 250 #sampling freq
 
