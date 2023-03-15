@@ -98,12 +98,12 @@ for S in subj_files:
         Off_k[i, 0:len(fm2.get_params('aperiodic_params','offset'))] = fm2.get_params('aperiodic_params','offset')
 
     # saving the results in numpy files
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Slope_nk_mean_20_2'),Slope_nk)
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Slope_k_mean_20_2'),Slope_k)
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'r2_k_mean_20_2'),r2_k)
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'r2_nk_mean_20_2'),r2_nk)
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Knee_k_mean_20_2'),Knee_k)
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Offset_nk_mean_20_2'),Off_nk)
-        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Offset_k_mean_20_2'),Off_k)
+        np.save(str(path_results /S[0:4]) +  '/' + EEG_psd.ch_names[i]  + '_Slope_nk_mean_20_2',Slope_nk)
+        np.save(str(path_results /S[0:4]) +  '/' + EEG_psd.ch_names[i]  + 'Slope_k_mean_20_2',Slope_k)
+        np.save(str(path_results /S[0:4]) +  '/' +  EEG_psd.ch_names[i] + 'r2_k_mean_20_2',r2_k)
+        np.save(str(path_results /S[0:4]) +  '/' +  EEG_psd.ch_names[i] + 'r2_nk_mean_20_2',r2_nk)
+        np.save(str(path_results /S[0:4]) +  '/' +  EEG_psd.ch_names[i] + 'Knee_k_mean_20_2',Knee_k)
+        np.save(str(path_results /S[0:4]) +  '/' +  EEG_psd.ch_names[i] + 'Offset_nk_mean_20_2',Off_nk)
+        np.save(str(path_results /S[0:4]) +  '/' +  EEG_psd.ch_names[i] + 'Offset_k_mean_20_2',Off_k)
 
         i = i+1
