@@ -29,6 +29,9 @@ subj_files = sorted(subj_files)
 path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
 
 
+# select electrodes (if empty, use all electrodes)
+electrode = []
+
 # Set parameters for calculating
 t     = 5 #in seconds
 f_min =  1 # maximum frequency
