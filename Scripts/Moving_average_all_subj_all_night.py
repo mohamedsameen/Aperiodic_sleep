@@ -29,7 +29,7 @@ subj_files = sorted(subj_files)
 path_results = Path('/home/b1044271/Columbia/Results/Time-resolved')
 
 
-# select electrodes (if empty, use all electrodes)
+# select electrodes (if empty, uses all electrodes)
 electrode = []
 
 # Set parameters for calculating
@@ -78,27 +78,32 @@ for S in subj_files:
     fm1 = FOOOFGroup(**SETTINGS_F1)
     fm2 = FOOOFGroup(**SETTINGS_F2)
 
-    fm1.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
-    fm1.save(S[0:4] + '_AllNight_NK',  file_path = path_results / electrode, save_results=True)
+    for i in np.arange(0,183,1):
+        fm1.fit(EEG_psd._freqs, EEG_psd._data[:,i,:], [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
+        fm1.save(S[0:4] + EEG_psd.ch_names[i] + '_AllNight_NK',  file_path = path_results / S[0:4], save_results=True)
 
-    fm2.fit(EEG_psd._freqs, np.squeeze(EEG_psd._data), [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
-    fm2.save(S[0:4] + '_AllNight_K',  file_path = path_results / electrode, save_results=True)
+        fm2.fit(EEG_psd._freqs, EEG_psd._data[:,i,:], [EEG_psd._freqs[0] , EEG_psd._freqs[-1]])
+        fm2.save(S[0:4] + EEG_psd.ch_names[i] + '_AllNight_K',  file_path = path_results / S[0:4], save_results=True)
 
-    Slope_nk[0:183, 0:len(fm1.get_params('aperiodic_params','exponent'))] = fm1.get_params('aperiodic_params','exponent')
-    Slope_k[0:183, 0:len(fm2.get_params('aperiodic_params','exponent'))] = fm2.get_params('aperiodic_params','exponent')
 
-    r2_nk[0:183, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
-    r2_k[0:183, 0:len(fm2.get_params('r_squared'))] = fm2.get_params('r_squared')
+        Slope_nk[i, 0:len(fm1.get_params('aperiodic_params','exponent'))] = fm1.get_params('aperiodic_params','exponent')
+        Slope_k[i, 0:len(fm2.get_params('aperiodic_params','exponent'))] = fm2.get_params('aperiodic_params','exponent')
 
-    Knee_k[0:183, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm2.get_params('aperiodic_params','knee')
+        r2_nk[i, 0:len(fm1.get_params('r_squared'))] = fm1.get_params('r_squared')
+        r2_k[i, 0:len(fm2.get_params('r_squared'))] = fm2.get_params('r_squared')
 
-    Off_nk[0:183, 0:len(fm1.get_params('aperiodic_params','offset'))] = fm1.get_params('aperiodic_params','offset')
-    Off_k[0:183, 0:len(fm2.get_params('aperiodic_params','offset'))] = fm2.get_params('aperiodic_params','offset')
+        Knee_k[i, 0:len(fm2.get_params('aperiodic_params','knee'))] = fm2.get_params('aperiodic_params','knee')
 
-    np.save(Path(path_results /S[0:4] /  'Slope_nk_mean_20_2'),Slope_nk)
-    np.save(Path(path_results /S[0:4] /  'Slope_k_mean_20_2'),Slope_k)
-    np.save(Path(path_results /S[0:4] /  'r2_k_mean_20_2'),r2_k)
-    np.save(Path(path_results /S[0:4] /  'r2_nk_mean_20_2'),r2_nk)
-    np.save(Path(path_results /S[0:4] /  'Knee_k_mean_20_2'),Knee_k)
-    np.save(Path(path_results /S[0:4] /  'Offset_nk_mean_20_2'),Off_nk)
-    np.save(Path(path_results /S[0:4] /  'Offset_k_mean_20_2'),Off_k)
+        Off_nk[i, 0:len(fm1.get_params('aperiodic_params','offset'))] = fm1.get_params('aperiodic_params','offset')
+        Off_k[i, 0:len(fm2.get_params('aperiodic_params','offset'))] = fm2.get_params('aperiodic_params','offset')
+
+    # saving the results in numpy files
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Slope_nk_mean_20_2'),Slope_nk)
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Slope_k_mean_20_2'),Slope_k)
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'r2_k_mean_20_2'),r2_k)
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'r2_nk_mean_20_2'),r2_nk)
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Knee_k_mean_20_2'),Knee_k)
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Offset_nk_mean_20_2'),Off_nk)
+        np.save(Path(path_results /S[0:4] /  EEG_psd.ch_names[i] + 'Offset_k_mean_20_2'),Off_k)
+
+        i = i+1
