@@ -1,1 +1,1 @@
-A brief description of the project.
+In this project, we used recent methods for parametrizing neural power spectra  (Donoghue et al., 2020) in iEEG and EEG sleep recordings to investigate the temporal dynamics of aperiodic activity during sleep.
