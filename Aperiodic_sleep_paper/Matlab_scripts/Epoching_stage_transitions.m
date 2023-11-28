@@ -51,7 +51,7 @@ UFV=[UFVSON UFVUNs];
 ALLStims = [FV UFV];
 
 
-for subj = 18:19
+for subj = 17
         if subj==2 || subj==9
             continue
     elseif subj < 10
