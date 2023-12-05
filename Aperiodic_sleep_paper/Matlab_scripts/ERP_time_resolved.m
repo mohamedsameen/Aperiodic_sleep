@@ -9,40 +9,180 @@ obob_init_ft;
 addpath(genpath('/home/b1044271/Toolboxes/eeglab14_1_1b'));
 eeglab; close gcf;
 
-path_R='/home/b1044271/Columbia/Preprocessed/Stage_epoched/New_stage_trans/stims/Last/';
-dataRow_r   =struct2cell(dir(fullfile(path_R , '*_DummyN.set'))');
+
+%% WAKE STIMS
+path_R='/home/b1044271/Columbia/Preprocessed/Stage_epoched/New_stage_trans/Cat/W/';
+dataRow_r   =struct2cell(dir(fullfile(path_R , '*_DummyW.set'))');
 files_D1 =dataRow_r(1,:);
 
-dataRow_r   =struct2cell(dir(fullfile(path_R , '*_DummyR.set'))');
-files_D2 =dataRow_r(1,:);
-
-dataRow_S  =struct2cell(dir(fullfile(path_R , '*_StimsN*.set'))');
+dataRow_S  =struct2cell(dir(fullfile(path_R , '*_StimsW.set'))');
 files_S1 =dataRow_S(1,:);
 
-dataRow_S  =struct2cell(dir(fullfile(path_R , '*_StimsR*.set'))');
+
+%% SLEEP STIMS
+path_R2='/home/b1044271/Columbia/Preprocessed/Stage_epoched/New_stage_trans/stims/Last/';
+
+dataRow_r   =struct2cell(dir(fullfile(path_R2 , '*_DummyR.set'))');
+files_D2 =dataRow_r(1,:);
+
+dataRow_S  =struct2cell(dir(fullfile(path_R2 , '*_StimsR.set'))');
 files_S2 =dataRow_S(1,:);
+
+dataRow_r   =struct2cell(dir(fullfile(path_R2 , '*_DummyN.set'))');
+files_D3 =dataRow_r(1,:);
+
+dataRow_S  =struct2cell(dir(fullfile(path_R2 , '*_StimsN.set'))');
+files_S3 =dataRow_S(1,:);
+
 
 for i = 1:length(files_S1)
     
     EEG_D1 = pop_loadset([path_R files_D1{i}]);
     EEG_S1 = pop_loadset([path_R files_S1{i}]);
-    EEG_D2 = pop_loadset([path_R files_D2{i}]);
-    EEG_S2 = pop_loadset([path_R files_S2{i}]); 
+    EEG_D2 = pop_loadset([path_R2 files_D2{i}]);
+    EEG_S2 = pop_loadset([path_R2 files_S2{i}]); 
+    EEG_D3 = pop_loadset([path_R2 files_D3{i}]);
+    EEG_S3 = pop_loadset([path_R2 files_S3{i}]); 
+
 
   cfg=[];
   cfg.keeptrials = 'yes';
    
       FVKCep1=eeglab2fieldtrip(EEG_D1,'preprocessing','none');
-      DUM_N{i}=ft_timelockanalysis(cfg,FVKCep1);
+      DUM_W{i}=ft_timelockanalysis(cfg,FVKCep1);
 
-       
       UFVKCep1=eeglab2fieldtrip(EEG_S1,'preprocessing','none');
-      STM_N{i}=ft_timelockanalysis(cfg,UFVKCep1);
-      
-            FVKCep2=eeglab2fieldtrip(EEG_D2,'preprocessing','none');
+      STM_W{i}=ft_timelockanalysis(cfg,UFVKCep1);
+         
+      % Sleep
+      FVKCep2=eeglab2fieldtrip(EEG_D2,'preprocessing','none');
       DUM_R{i}=ft_timelockanalysis(cfg,FVKCep2);
 
-       
       UFVKCep2=eeglab2fieldtrip(EEG_S2,'preprocessing','none');
       STM_R{i}=ft_timelockanalysis(cfg,UFVKCep2);
+      
+         
+      FVKCep3=eeglab2fieldtrip(EEG_D3,'preprocessing','none');
+      DUM_N{i}=ft_timelockanalysis(cfg,FVKCep3);
+
+      UFVKCep3=eeglab2fieldtrip(EEG_S3,'preprocessing','none');
+      STM_N{i}=ft_timelockanalysis(cfg,UFVKCep3);   
+      
 end
+%% Baseline correction
+%-----------------------%
+cfg_b=[];
+cfg_b.baseline=[-0.5 0];
+cfg_b.baselinetype='relchange';
+  
+for subj = 1:16
+     
+    BE_StimW{subj}=ft_timelockbaseline(cfg_b,STM_W{subj});
+     BE_DumW{subj}=ft_timelockbaseline(cfg_b,DUM_W{subj});
+     
+      BE_StimR{subj}=ft_timelockbaseline(cfg_b,STM_R{subj});
+     BE_DumR{subj}=ft_timelockbaseline(cfg_b,DUM_R{subj});
+     
+     BE_StimN{subj}=ft_timelockbaseline(cfg_b,STM_N{subj});
+     BE_DumN{subj}=ft_timelockbaseline(cfg_b,DUM_N{subj});
+
+     
+end
+
+
+%% Grandaverage
+
+cfg_g=[];
+cfg_g.latency=[-4 4];
+cfg_g.keepindividual = 'yes'; 
+
+WStim_all=ft_timelockgrandaverage(cfg_g, BE_StimW{:});
+WDum_all=ft_timelockgrandaverage(cfg_g, BE_DumW{:});
+NStim_all=ft_timelockgrandaverage(cfg_g, BE_StimN{:});
+NDum_all=ft_timelockgrandaverage(cfg_g, BE_DumN{:});
+RStim_all=ft_timelockgrandaverage(cfg_g, BE_StimR{:});
+RDum_all=ft_timelockgrandaverage(cfg_g, BE_DumR{:});
+
+%% Permutation
+
+cfg=[];
+cfg.statistic       ='ft_statfun_depsamplesT'; %between groups independant sampels statistics
+cfg.method           ='montecarlo'; % Monte Carlo method for calculating the signif prob an estimate of the p-value under the permutation distribution.
+
+cfg_g.channel = {'E257'};
+
+cfg.correctm         = 'cluster';
+cfg.clusteralpha     = 0.05;
+cfg.clusterstatistic = 'maxsum';
+cfg.avgoverchan      = 'yes';
+%cfg.minnbchan        = 2;
+cfg.tail             = 0;
+cfg.clustertail      = 0;
+cfg.alpha            = 0.025;
+cfg.numrandomization = 5000;
+cfg.uvar             = 1;
+cfg.ivar             = 2;
+% Design Matrix for T-Test (2 Conditions)
+subj = 16;
+design = zeros(2,2*subj);
+for m = 1:subj
+        design(1,m) = m;
+end
+for m = 1:subj
+        design(1,subj+m) = m;
+        
+end
+design(2,1:subj) = 1;
+design(2,subj+1:2*subj) = 2;
+cfg.design= design; 
+
+% KC
+[stats]   = ft_timelockstatistics(cfg, Stim_all, Dum_all);
+
+
+%% Select Cz
+cfg=[];
+cfg.channel = {'E257'};
+
+WStim_all = ft_selectdata(cfg, WStim_all);
+WDum_all = ft_selectdata(cfg, WDum_all);
+NStim_all = ft_selectdata(cfg, NStim_all);
+NDum_all = ft_selectdata(cfg, NDum_all);
+RStim_all = ft_selectdata(cfg, RStim_all);
+RDum_all = ft_selectdata(cfg, RDum_all);
+
+
+
+
+%% Saving
+
+Wstim_erp = squeeze(WStim_all.individual);
+save('Wstim_erp','Wstim_erp')
+
+Nstim_erp = squeeze(NStim_all.individual);
+save('Nstim_erp','Nstim_erp')
+
+Rstim_erp = squeeze(RStim_all.individual);
+save('Rstim_erp','Rstim_erp')
+
+
+WDum_erp = squeeze(WDum_all.individual);
+save('WDum_erp','WDum_erp')
+
+NDum_erp = squeeze(NDum_all.individual);
+save('NDum_erp','NDum_erp')
+
+RDum_erp = squeeze(RDum_all.individual);
+save('RDum_erp','RDum_erp')
+
+Stim_erp = cat(3, Nstim_erp,Rstim_erp);
+Stim_erp2 = mean(Stim_erp,3);
+save('Stim_erp2','Stim_erp2')
+
+
+Dum_erp = cat(3, NDum_erp,RDum_erp);
+Dum_erp2 = mean(Dum_erp,3);
+save('Dum_erp2','Dum_erp2')
+
+times = WStim_all.time;
+save('times','times')

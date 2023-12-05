@@ -15,7 +15,7 @@ from mne.time_frequency import tfr_multitaper
 
 
 # get the subjects list
-Data_path = '/home/b1044271/Columbia/Preprocessed/Stage_epoched/New_stage_trans/Cat/M/*.set'
+Data_path = '/home/b1044271/Columbia/Preprocessed/Stage_epoched/New_stage_trans/Cat/*.set'
 subj_files = sorted(glob.glob(Data_path))
 
 electrode = 'E257'
@@ -28,6 +28,7 @@ SETTINGS_B  = { 'method' : 'welch', 'average' : None, 'fmin' :1 , 'fmax':f_max, 
 
 # Settings for FOOOF
 SETTINGS_F1={'max_n_peaks':8, 'aperiodic_mode':'knee'}
+SETTINGS_F2={'max_n_peaks':8, 'aperiodic_mode':'fixed'}
 
 fm1 = FOOOFGroup(**SETTINGS_F1)
 for x in subj_files:
@@ -39,14 +40,14 @@ for x in subj_files:
 
     #EEG_psd2 = EEG.compute_psd(**SETTINGS_B) 
 	
-    fm1 = FOOOFGroup(**SETTINGS_F1)
+    fm1 = FOOOFGroup(**SETTINGS_F2)
     #fm2 = FOOOFGroup(**SETTINGS_F1)
 
     fm1.fit(EEG_psd1.freqs, np.transpose(np.mean(np.squeeze(EEG_psd1._data),0)), [EEG_psd1.freqs[0] , EEG_psd1.freqs[-1]])
-    fm1.save(x[73:-4] +'_FOOOFed_MT',  file_path = '/home/b1044271/Columbia/Results/Time-resolved/Transitions/Cz/Cat', save_results=True)
+    fm1.save(x[71:-4] +'_FOOOFed_MT_Fixed',  file_path = '/home/b1044271/Columbia/Results/Time-resolved/Transitions/Cz/Stims', save_results=True)
 
     #fm2.fit(EEG_psd2.freqs, np.transpose(np.mean(np.squeeze(EEG_psd2._data),0)), [EEG_psd2.freqs[0] , EEG_psd2.freqs[-1]])
-    #fm2.save(x[73:-4] +'_FOOOFed_W',  file_path = '/home/b1044271/Columbia/Results/Time-resolved/Transitions/Cz/Cat', save_results=True)
+    #fm2.save(x[71:-4] +'_FOOOFed_W_Fixed',  file_path = '/home/b1044271/Columbia/Results/Time-resolved/Transitions/Cz/Stims', save_results=True)
 
 
 np.save('/home/b1044271/Columbia/Results/Time-resolved/Transitions/Cz/Cat/Freqs_transitions_MT', EEG_psd1.freqs)

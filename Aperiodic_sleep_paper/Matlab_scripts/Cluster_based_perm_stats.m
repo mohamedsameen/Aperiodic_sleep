@@ -26,6 +26,9 @@ X12 =  table2array(readtable('/home/b1044271/Columbia/Results/Permutation/UFV_al
 
 X13 =  table2array(readtable('/home/b1044271/Columbia/Results/Permutation/SON_all.txt'));
 X14 =  table2array(readtable('/home/b1044271/Columbia/Results/Permutation/UN_all.txt'));
+
+x0   =  table2array(readtable('/home/b1044271/Columbia/Results/basePSD.txt'));
+x00 =  table2array(readtable('/home/b1044271/Columbia/Results/peakPSD.txt'));
 %% cluster based
 
 % load a fieldtrip erp structure
@@ -56,7 +59,7 @@ cfg.numrandomization = 5000;      % number of draws from the permutation distrib
 cfg.uvar             = 1;
 cfg.ivar             = 2;
 % Design Matrix for T-Test (2 Conditions)
-subj = 17;
+subj = 32;
 design = zeros(2,2*subj);
 for m = 1:subj
         design(1,m) = m;
@@ -67,6 +70,22 @@ end
 design(2,1:subj) = 1;
 design(2,subj+1:2*subj) = 2;
 cfg.design  = design;   
+
+%% PSDs
+FV_KCs=permute(x0,[1,3,2]);
+UFV_KCs=permute(x00,[1,3,2]);
+
+all_UFV = all_FV;
+
+
+all_FV.individual = FV_KCs;
+all_UFV.individual = UFV_KCs;
+
+all_FV.time  = 1:1:89;
+all_UFV.time =  1:1:89;
+%all_FV.time  = -60:2:58;
+%all_UFV.time =  -60:2:58;
+[stat_p] = ft_timelockstatistics(cfg, all_UFV, all_FV);
 
 %% N3 V N2
 FV_KCs=permute(X1,[1,3,2]);

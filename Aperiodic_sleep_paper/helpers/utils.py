@@ -167,22 +167,6 @@ def compute_z_values(p_values):
 
     return z_values
 
-# function for the effect size of post-hoc dunn using Cliff's delta
-def compute_cliffs_delta(data1, data2):
-    """
-    Compute Cliff's Delta effect size for pairwise comparisons.
-
-    Parameters:
-    - data1, data2: Arrays representing two samples.
-
-    Returns:
-    - Cliff's Delta effect size.
-    """
-   
-    N = len(data1) * len(data2)
-    m, n = np.sum(data1 > data2), np.sum(data1 < data2)
-    delta = (m - n) / N
-    return delta
 
 # bonferroni multiple comparison
 def bonferroni_correction(p_values, num_comparisons):
@@ -309,3 +293,30 @@ def perform_permutation_test(array1, array2, num_permutations=1000):
     d =  observed_cohen_d
 
     return t,p,d
+
+##########################################################
+def perform_baseline(dataV, timeV, l_lim, h_lim):
+    """
+    Perform baseline correction (absolute change)
+
+    Parameters:
+    - dataV: data
+    - timeV: Time vector
+    - l_lim: lower time limit for baseline
+    - h_lim: upper time limit for baseline
+
+    Returns:
+    - Baseline corrected vector
+    """
+    idx = (timeV>l_lim)*(timeV<h_lim) #get times
+    bl  = np.where(idx) # get indices of times in data
+    dataN = np.ones(np.shape(dataV)) * np.nan
+    
+    for b in np.arange(np.shape(dataV)[0]):
+        meanBL = np.nanmean(dataV[b,bl])
+
+        for i in np.arange(np.shape(dataV)[1]):
+        
+            dataN[b,i] = (dataV[b,i]-meanBL)
+            
+    return(dataN)
