@@ -38,6 +38,6 @@ Dependencies include 3rd party scientific Python packages:
 - [seaborn](https://github.com/mwaskom/seaborn)
 
 - [mne](https://github.com/mne-tools/mne-python)
-- [fooof]  >= 1.0.0 (https://fooof-tools.github.io/fooof/index.html)
-- [lisc]  >= 0.2.0 (https://github.com/lisc-tools/lisc/tree/main/tutorials)
+- [fooof](https://fooof-tools.github.io/fooof/index.html) >= 1.0.0 
+- [lisc](https://github.com/lisc-tools/lisc/tree/main/tutorials)  >= 0.2.0 
 
