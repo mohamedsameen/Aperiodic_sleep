@@ -13,8 +13,6 @@ The preprint for this project:
 Ameen, M. S., Jacobs, J., Schabus, M., Hoedlmoser, K., & Donoghue, T. (2024). The Temporal Dynamics of Aperiodic Neural Activity Track 
 Changes in Sleep Architecture (p. 2024.01.25.577204). bioRxiv. https://doi.org/10.1101/2024.01.25.577204
 
-Direct Link: https://doi.org/10.1101/2024.01.25.577204
-
 
 # Project Guide
 
