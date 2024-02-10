@@ -28,7 +28,7 @@ Python Notebooks contain the codes for running FOOOF as well as the statistical 
 
 This repo requires Python >= 3.7 to run.
 
-Dependencies include 3rd party scientific Python packages:
+Dependency Python packages:
 - [numpy](https://github.com/numpy/numpy)
 - [pandas](https://github.com/pandas-dev/pandas)
 - [scipy](https://github.com/scipy/scipy)
