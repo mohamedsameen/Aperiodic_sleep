@@ -24,7 +24,7 @@ In Python we have scripts and Notebooks. Python scripts are mainly to run FOOOF 
 Python Notebooks contain the codes for running FOOOF as well as the statistical analyses on the resulting FOOOF parameters.
 
 
-# Requirements
+## Requirements
 
 This repo requires Python >= 3.7 to run.
 
