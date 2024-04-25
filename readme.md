@@ -13,8 +13,6 @@ The preprint for this project:
 Ameen, M. S., Jacobs, J., Schabus, M., Hoedlmoser, K., & Donoghue, T. (2024). The Temporal Dynamics of Aperiodic Neural Activity Track 
 Changes in Sleep Architecture (p. 2024.01.25.577204). bioRxiv. https://doi.org/10.1101/2024.01.25.577204
 
-Direct Link: https://doi.org/10.1101/2024.01.25.577204
-
 
 # Project Guide
 
@@ -26,11 +24,11 @@ In Python we have scripts and Notebooks. Python scripts are mainly to run FOOOF 
 Python Notebooks contain the codes for running FOOOF as well as the statistical analyses on the resulting FOOOF parameters.
 
 
-# Requirements
+## Requirements
 
 This repo requires Python >= 3.7 to run.
 
-Dependencies include 3rd party scientific Python packages:
+Dependency Python packages:
 - [numpy](https://github.com/numpy/numpy)
 - [pandas](https://github.com/pandas-dev/pandas)
 - [scipy](https://github.com/scipy/scipy)
@@ -38,5 +36,6 @@ Dependencies include 3rd party scientific Python packages:
 - [seaborn](https://github.com/mwaskom/seaborn)
 
 - [mne](https://github.com/mne-tools/mne-python)
-- [fooof]  >= 1.0.0 (https://fooof-tools.github.io/fooof/index.html)
-- [lisc]  >= 0.2.0 (https://github.com/lisc-tools/lisc/tree/main/tutorials)
+- [fooof](https://fooof-tools.github.io/fooof/index.html) >= 1.0.0 
+- [lisc](https://github.com/lisc-tools/lisc/tree/main/tutorials)  >= 0.2.0 
+
