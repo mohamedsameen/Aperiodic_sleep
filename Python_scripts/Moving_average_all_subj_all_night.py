@@ -1,3 +1,6 @@
+# Calculates the PSDs using Welch's and fits the aperiodic models and get the parameters for all subjects over the whole night
+# the results are used for the analysis tracking the temporal dynamics of the transitions between sleep stages (c.f. Figure 6)
+##########################################################
 import mne
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +14,7 @@ from fooof.utils.download import load_fooof_data
 from pathlib import Path
 import glob
 from math import floor
-
+#########################################
 
 # get the staging list
 path_stage = Path('/home/b1044271/EEGsleep/SleepStaging/mat/mne2/')

@@ -1,3 +1,5 @@
+# This script calculates the time-frequency reprenstations using a moving average over the wheole night for one participant in the EEG experiment at electrode CZ (See Figure 6A)
+########################################################
 import mne
 import numpy as np
 import matplotlib.pyplot as plt

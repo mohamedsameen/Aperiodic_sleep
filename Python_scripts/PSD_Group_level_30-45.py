@@ -1,3 +1,4 @@
+# Fitting aperiodc model to EEG data using the narrrow band frequency and a fixed model (single-exponent) and estimating the Exponent
 import mne
 import numpy as np
 import matplotlib.pyplot as plt

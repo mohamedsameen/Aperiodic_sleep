@@ -90,6 +90,9 @@ for i = 1:length(files_S2)
       UFVKCep3=eeglab2fieldtrip(EEG_S3,'preprocessing','none');
       STM_N2{i}=ft_timelockanalysis(cfg,UFVKCep3);   
       
+      
+      
+      
  
 end
 %% Baseline correction

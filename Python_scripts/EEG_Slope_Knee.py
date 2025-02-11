@@ -1,4 +1,5 @@
-#Here we will plot the slope and the knee frqeuency per subject for each sleep stage
+#This scripts fits different aperiodic models (Knee M, Fixed M) to the EEG data. It produces a Expoennt and Knee Frequency metrics 
+#######################################################
 import os
 from pathlib import Path
 import numpy as np

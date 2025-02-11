@@ -1,3 +1,6 @@
+# Using multitaper approach to provide a high temporal resolution for estimating the PSDs across the whole night for fine-grained estimation of the aperiodic model parameters over the whole night.
+# The resukts are used for analysing evoked responses (c.f. Figure 7)
+##########################################################
 import mne
 import numpy as np
 import matplotlib.pyplot as plt

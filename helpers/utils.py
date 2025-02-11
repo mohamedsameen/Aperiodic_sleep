@@ -5,13 +5,11 @@ from pathlib import Path
 import glob
 from scipy import stats
 import matplotlib.pyplot as plt
-from scipy.stats import pearsonr, spearmanr, kendalltau, normaltest
+from scipy.stats import pearsonr, spearmanr, kendalltau, normaltest, norm, friedmanchisquare
 from math import floor
-from scipy.stats import friedmanchisquare
 from scikit_posthocs import posthoc_dunn
 from pingouin import compute_effsize
 from cliffs_delta import cliffs_delta 
-from scipy.stats import norm
 ###################################################################################################
 ###################################################################################################
 
@@ -69,8 +67,8 @@ def perform_correlation(x, y):
         correlation, p_value = spearmanr(x, y)
 
     print(f"Correlation: {correlation}")
-    print(f"P-value: {p_value}")    
-
+    print(f"P-value: {p_value}")  
+    return correlation, p_value
 
 ###############
 # Resample 30s staging files acccording to the required sampling rate
@@ -167,7 +165,7 @@ def compute_z_values(p_values):
 
     return z_values
 
-
+########################
 # bonferroni multiple comparison
 def bonferroni_correction(p_values, num_comparisons):
     """
@@ -320,3 +318,20 @@ def perform_baseline(dataV, timeV, l_lim, h_lim):
             dataN[b,i] = (dataV[b,i]-meanBL)
             
     return(dataN)
+#############################################################
+def equalize_trials(*arrays):
+    """
+    Equalizes the number of trials across multiple arrays by truncating each to the smallest length.
+    
+    Parameters:
+    *arrays : tuple of np.ndarray
+        Input arrays to be equalized in length.
+
+    Returns:
+    tuple of np.ndarray
+        Arrays truncated to the minimum length.
+    """
+    min_len = min(map(len, arrays))
+    return tuple(arr[:min_len] for arr in arrays)
+
+
