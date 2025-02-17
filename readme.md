@@ -16,12 +16,12 @@ Changes in Sleep Architecture (p. 2024.01.25.577204). bioRxiv. https://doi.org/1
 
 # Project Guide
 
-In this project we used both Python (v3.7) and MATLAB (v2019a). Matlab scripts are basically preprocessing scripts. 
+In this project we used both Python (v3.7) and MATLAB (v2019a). In Python we have scripts and Notebooks. Then otebooks contain the main analzses behind the figures presented in the manuscript. 
+Python scripts are mainly to run time-resolved FOOOF over full night EEG datasets. 
+Matlab scripts are basically preprocessing scripts. 
 From the preprocessing of full night EEG files to the epoching of the data into trials of different conditions and calculating ERPs. 
 We also used Fieldtrip toolbox in MATLAB for cluster based permutation statistics.
 
-In Python we have scripts and Notebooks. Python scripts are mainly to run FOOOF over full night EEG datasets. 
-Python Notebooks contain the codes for running FOOOF as well as the statistical analyses on the resulting FOOOF parameters.
 
 
 ## Requirements
