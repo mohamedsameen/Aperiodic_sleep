@@ -33,7 +33,7 @@ Dependency Python packages:
 - [scipy](https://github.com/scipy/scipy)
 - [matplotlib](https://github.com/matplotlib/matplotlib)
 - [seaborn](https://github.com/mwaskom/seaborn)
-  [scikit-Learn](https://scikit-learn.org/stable/)
+- [scikit-Learn](https://scikit-learn.org/stable/)
 - [mne](https://github.com/mne-tools/mne-python)
 - [fooof](https://fooof-tools.github.io/fooof/index.html) >= 1.0.0 
 - [lisc](https://github.com/lisc-tools/lisc/tree/main/tutorials)  >= 0.2.0 
